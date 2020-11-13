@@ -10,7 +10,7 @@ function App() {
       <div className="app-wrapper">
         <Header/>
         <Route exact path='/' render={() => <MainPage/>} />
-        <Route exact path='/add' render={() => <CreateBulletinPage/>} />
+        <Route path='/add' render={() => <CreateBulletinPage/>} />
       </div>
   );
 }

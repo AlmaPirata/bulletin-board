@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {CITIES} from "../../constants/cities";
-import {TextField, TextareaAutosize, MenuItem, Select, Button} from "@material-ui/core";
+import {TextField, MenuItem, Select, Button} from "@material-ui/core";
 import InputMask from "react-input-mask";
 
 const BulletinItem = (props) => {

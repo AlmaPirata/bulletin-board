@@ -2,11 +2,28 @@ import React, {useEffect, useState} from "react";
 import { v4 as uuidv4 } from 'uuid';
 import {getLocalStorageItems, setLocalStorageItems} from "../../state";
 import {CITIES} from "../../constants/cities";
-import { Button, MenuItem, InputLabel, Select, TextField } from '@material-ui/core';
+import { Button, MenuItem, InputLabel, Select, TextField, Snackbar } from '@material-ui/core';
 import InputMask from "react-input-mask";
+import MuiAlert from '@material-ui/lab/Alert';
 
 
 const CreatePage = () => {
+  //snackbar
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
+
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnackbar(false);
+  };
+  //close snackbar
+
   const [item, setItem] = useState({
     id: uuidv4(),
     caption: '',
@@ -28,16 +45,23 @@ const CreatePage = () => {
 
   const onChange = (e) => {
     let {name, value} = e.target;
-    console.log([name])
+
     setItem({
       ...item,
       [name]: value
     });
   }
 
+  const onClearCitySelect = () => {
+    setItem({
+      ...item,
+      city: ''
+    });
+  }
+
   onsubmit = (e) => {
     e.preventDefault();
-    //const phone =
+
     setItem({
         ...item,
         id: uuidv4(),
@@ -48,7 +72,15 @@ const CreatePage = () => {
       }
     );
     setItems((items) => [...items, item]);
-    console.log(item);
+
+    setOpenSnackbar(true);
+    setItem({
+      id: uuidv4(),
+      caption: '',
+      textBody: '',
+      phone: '',
+      city: ''
+    });
   }
 
   return (
@@ -61,7 +93,7 @@ const CreatePage = () => {
           </div>
           <div className='form-row'>
             <TextField name="textBody" className="input form-text-body" multiline variant="outlined" inputProps={{maxLength: 300}}
-                       rows={4} value={item.textarea} onChange={onChange} required />
+                       rows={4} value={item.textBody} onChange={onChange} required />
             <div className='input-description'>Обязательное поле <br/>Не более 300 символов</div>
           </div>
           <div className='form-row'>
@@ -77,11 +109,16 @@ const CreatePage = () => {
                 <MenuItem value=''>Выберите город</MenuItem>
                 {CITIES.map((city, i) => <MenuItem key={i} value={city}>{city}</MenuItem>)}
               </Select>
+              <div className={`close-select ${(item.city === '') ? "hidden" : ""}`} onClick={onClearCitySelect}/>
             </div>
-            {/*<div className='input-description'>Заполнено</div>*/}
           </div>
-          <Button className='submit-form-button' type="submit" variant="contained">Добавить</Button>
+          <Button className='submit-form-button' type="submit" variant="contained" >Добавить</Button>
         </div>
+        <Snackbar anchorOrigin={{vertical: 'top', horizontal: 'right'}} open={openSnackbar} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="success">
+            This is a success message!
+          </Alert>
+        </Snackbar>
       </form>
     </React.Fragment>
   );

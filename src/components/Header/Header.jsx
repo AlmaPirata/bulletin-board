@@ -6,20 +6,17 @@ import MenuList from "@material-ui/core/MenuList";
 import './header.css';
 
 const Header = () => {
-  function handleClick() {
-
-  }
 
   return (
     <Paper className='header'>
-      <MenuList>
-        <MenuItem>
-          <NavLink color="inherit" to="/" onClick={handleClick}>
+      <MenuList className="main-header">
+        <MenuItem className="header-item">
+          <NavLink className="header-item-link" color="inherit" to="/" onClick={handleClick}>
             Главная
           </NavLink>
         </MenuItem>
-        <MenuItem>
-          <NavLink color="inherit" to="/add" onClick={handleClick}>
+        <MenuItem className="header-item">
+          <NavLink className="header-item-link" color="inherit" to="/add" onClick={handleClick}>
             Создать объявление
           </NavLink>
         </MenuItem>
