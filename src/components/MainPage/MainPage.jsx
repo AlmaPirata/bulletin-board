@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import {NavLink} from "react-router-dom";
 import BulletinItem from "../BulletinItem/BulletinItem";
 import {getLocalStorageItems, setLocalStorageItems} from "../../state";
 
@@ -43,7 +42,6 @@ const MainPage = () => {
                   toggleReadOnly={(value) => toggleReadOnly(item.id, value)}
                   saveChanges={saveChanges}
                   readOnly={readOnlyIdItem !== item.id}
-                  // edit2={edit2}
                 />
             );
           })}
